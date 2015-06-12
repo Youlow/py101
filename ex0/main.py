@@ -3,9 +3,24 @@ from __future__ import unicode_literals
 
 # 1. Получить лист целых чисел, которые без остатка делятся на 3, в диапазоне от 0 до n
 n = 10000000
+div = []
+for i in range(n):
+    if not i % 3:
+        div.append(i)
+print(div)
+    
 
 # 2. Написать функцию, которая принимает в качетве параметров число n, а возвращает лист
 # с последовательностью Фибоначчи в диапазоне от 0 до n.
+def Fibonacci(n):
+    fib = [0]
+    a=1
+    b=1
+    while a<=n:
+        fib.append(a)
+        a,b = b,a+b
+    return fib
+
 
 # 3. Написать функцию считающую количество вхождений подстроки в строку
 input_str = """
@@ -118,3 +133,4 @@ print(sub_str_entry_counter(input_str, 'Master'))
 # ZZZ      ZZZ
 # Z          Z
 #
+
