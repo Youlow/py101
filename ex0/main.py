@@ -8,17 +8,36 @@ for i in range(n):
     if not i % 3:
         div.append(i)
 print(div)
+
+print([j for j in range(0,n,3)])
     
 
 # 2. Написать функцию, которая принимает в качетве параметров число n, а возвращает лист
 # с последовательностью Фибоначчи в диапазоне от 0 до n.
-def Fibonacci(n):
-    fib = [0]
+def fibonacci1(n):
+    fib = [0,]
     a=1
     b=1
     while a<=n:
         fib.append(a)
         a,b = b,a+b
+    return fib
+
+def fibonacci2(n):
+    def fibonacci_rec(m):
+        if m==0:
+            return 0
+        elif m==1:
+            return 1
+        else:
+            return fibonacci_rec(m-2) + fibonacci_rec(m-1)
+    fib = []
+    i = 0
+    elem = fibonacci_rec(i)
+    while elem <= n:
+        fib.append(elem)
+        i += 1
+        elem = fibonacci_rec(i)
     return fib
 
 
@@ -122,7 +141,17 @@ print(sub_str_entry_counter(input_str, 'Master'))
 
 # 4. Написать функцию, которая принимает строку (например "MDMA"), а возвращает строку с символами в побратном
 # порядке (например "AMDM").
+def reverse_string1(string): #simple
+    temp = list(str(string))
+    temp.reverse()
+    return ''.join(temp)
 
+def reverse_string2(string): #handmade edition
+    temp = list(str(string))
+    for i in range(0,len(temp)//2):
+        temp[i], temp[-1*(i+1)] = temp[-1*(i+1)], temp[i]
+    return ''.join(temp)
+        
 # 5. Нарисуй превдографикой бабочку, чего нить вроде такой:
 #
 # Z          Z
