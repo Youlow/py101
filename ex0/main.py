@@ -9,28 +9,29 @@ for i in range(n):
         div.append(i)
 print(div)
 
-print([j for j in range(0,n,3)])
-    
+print([j for j in range(0, n, 3)])
+
 
 # 2. Написать функцию, которая принимает в качетве параметров число n, а возвращает лист
 # с последовательностью Фибоначчи в диапазоне от 0 до n.
 def fibonacci1(n):
     fib = [0,]
-    a=1
-    b=1
-    while a<=n:
+    a = 1
+    b = 1
+    while a <= n:
         fib.append(a)
-        a,b = b,a+b
+        a, b = b, a + b
     return fib
+
 
 def fibonacci2(n):
     def fibonacci_rec(m):
-        if m==0:
+        if m == 0:
             return 0
-        elif m==1:
+        elif m == 1:
             return 1
         else:
-            return fibonacci_rec(m-2) + fibonacci_rec(m-1)
+            return fibonacci_rec(m - 2) + fibonacci_rec(m - 1)
     fib = []
     i = 0
     elem = fibonacci_rec(i)
@@ -130,10 +131,7 @@ Master"""
 
 def sub_str_entry_counter(string=None, sub_string=None):
     count = 0
-
-    # !!!
-    # вставь свой код сюда
-
+    count = string.count(sub_string)
     return count if string is not None and sub_string is not None else None
 
 
@@ -141,17 +139,20 @@ print(sub_str_entry_counter(input_str, 'Master'))
 
 # 4. Написать функцию, которая принимает строку (например "MDMA"), а возвращает строку с символами в побратном
 # порядке (например "AMDM").
-def reverse_string1(string): #simple
+
+
+def reverse_string1(string):
     temp = list(str(string))
     temp.reverse()
     return ''.join(temp)
 
-def reverse_string2(string): #handmade edition
+
+def reverse_string2(string):
     temp = list(str(string))
-    for i in range(0,len(temp)//2):
-        temp[i], temp[-1*(i+1)] = temp[-1*(i+1)], temp[i]
+    for i in range(0, len(temp) // 2):
+        temp[i], temp[-1 * (i + 1)] = temp[-1 * (i + 1)], temp[i]
     return ''.join(temp)
-        
+
 # 5. Нарисуй превдографикой бабочку, чего нить вроде такой:
 #
 # Z          Z
@@ -163,3 +164,21 @@ def reverse_string2(string): #handmade edition
 # Z          Z
 #
 
+
+def butterfly_init(m=7, n=13, sym="Z"):
+    butterfly = [[sym,] * n for i in range(m)]
+    for i in range(m):
+        for j in range(n):
+            if i < m // 2 and 2 * i + 1 <= j <= (n - 2) - 2 * i or \
+               i >= m // 2 and (m - i) * 2 - 1 <= j <= n - 2 * (m - i):
+                butterfly[i][j] = " "
+    return butterfly
+
+
+def butterfly_draw(butterfly):
+    for i in range(len(butterfly)):
+        print("".join(butterfly[i]))
+
+
+but = butterfly_init(9, 15)
+butterfly_draw(but)
