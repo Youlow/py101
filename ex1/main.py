@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from models import *
-from views import *
-from controllers import *
+from models import Field, Player
+from views import View
+from controllers import Controller
 
 
 def main():
     player1 = Player("Grisha", " X ")
     player2 = Player("Misha", " O ")
-    field = Field(3)
+    field = Field()
     view = View()
     cont = Controller(player1, player2, field, view)
     cont.game_loop()

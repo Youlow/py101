@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-class Field:
-    def __init__(self, x):
-        self.rank = x
-        self.field = [["   ",] * x for i in range(x)]
+class Field(object):
+    def __init__(self, rank=3):
+        self.rank = rank
+        self.field = [["   ",] * rank for i in range(rank)]
 
     def set_value(self, x, y, sym):
         self.field[x][y] = sym
@@ -12,11 +12,11 @@ class Field:
         return self.rank
         
 
-class Player:
-    def __init__(self, n, s):
-        self.name = n
-        self.sign = s
+class Player(object):
+    def __init__(self, name="Player", sign=" X "):
+        self.name = name
+        self.sign = sign
 
 
 if __name__ == "__main__":
-    print("It's model module")
+    print("It's a model module")

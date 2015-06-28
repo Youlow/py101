@@ -3,7 +3,7 @@ import os
 import sys
 
 
-class View:
+class View(object):
     def __init__(self):
         pass
 
@@ -32,9 +32,8 @@ class View:
         try:
             raw_input("Press Enter")
         except NameError:
-            input("Press Enter")
-            
+            input("Press Enter")       
 
 
 if __name__ == "__main__":
-    print("It's view module")
+    print("It's a view module")
