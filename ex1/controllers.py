@@ -9,9 +9,25 @@ class Controller(object):
         self.field = field
         self.view = view
 
-    def game_loop(self):
-#        show_menu()
+    def players_init(self):
+        name = self.view.show_menu("1")
+        if name != "":
+            self.player1.set_name(name)
+        name = self.view.show_menu("2")
+        if name != "":
+            self.player2.set_name(name)
+        
         player_one_turn = bool(random.randint(0, 1))
+        if player_one_turn:
+            self.player1.set_sign("X")
+            self.player2.set_sign("O")
+        else:
+            self.player1.set_sign("O")
+            self.player2.set_sign("X")
+        return player_one_turn
+
+    def game_loop(self):
+        player_one_turn = self.players_init()
         game_over = False
         while not game_over:
             self.view.clear_screen()
@@ -38,9 +54,9 @@ class Controller(object):
                 self.view.clear_screen()
                 self.view.draw(self.field)
                 if player_one_turn:
-                    self.view.show_message(self.player1.name + self.player1.sign + "wins")
+                    self.view.show_message(self.player1.name + " (" + self.player1.sign + ") wins")
                 else:
-                    self.view.show_message(self.player2.name + self.player2.sign + "wins")
+                    self.view.show_message(self.player2.name + " (" + self.player2.sign + ") wins")
                 break
             player_one_turn = not player_one_turn
 
@@ -56,7 +72,7 @@ class Controller(object):
             return "Only integer coordinates!"
         if not (0 <= a < self.field.get_rank() and 0 <= b < self.field.get_rank()):
             return "Enter coords in range [0;{})".format(self.field.get_rank())
-        elif self.field.field[a][b] != "   ":
+        elif self.field.field[a][b] != " ":
             return "Coordinates are occupied!"
         else:
             return ""
@@ -66,7 +82,7 @@ class Controller(object):
             win = True
             raw_item = line[0]
             for item in line:
-                if raw_item == "   " or (win and raw_item != item):
+                if raw_item == " " or (win and raw_item != item):
                     win = False
             if win:
                 return True
@@ -74,21 +90,21 @@ class Controller(object):
         for i in range(self.field.get_rank()):
             win = True
             for line in self.field.field:
-                if col_list[i] == "   " or (win and col_list[i] != line[i]):
+                if col_list[i] == " " or (win and col_list[i] != line[i]):
                     win = False
             if win:
                 return True
         diag_item = self.field.field[0][0]
         win = True
         for i in range(self.field.get_rank()):
-            if diag_item == "   " or (win and diag_item != self.field.field[i][i]):
+            if diag_item == " " or (win and diag_item != self.field.field[i][i]):
                 win = False
         if win:
             return True
         diag_item = self.field.field[0][self.field.get_rank() - 1]
         win = True
         for i in range(self.field.get_rank()):
-            if diag_item == "   " or (win and diag_item != self.field.field[i][self.field.get_rank() - 1 - i]):
+            if diag_item == " " or (win and diag_item != self.field.field[i][self.field.get_rank() - 1 - i]):
                 win = False
         if win:
             return True
@@ -98,7 +114,7 @@ class Controller(object):
     def no_one_wins(self, field):
         for line in field.field:
             for item in line:
-                if item == "   ":
+                if item == " ":
                     return False
         return True
 

@@ -9,7 +9,7 @@ class View(object):
 
     def input_values(self, player):
         try:
-            return raw_input(player.name + "'s turn\n")
+            return raw_input(player.name + "'s (" + player.sign + ") turn\n")
         except NameError:
             return input(player.name + "'s turn\n")
 
@@ -17,7 +17,7 @@ class View(object):
         i = 0
         for line in field.field:
             i += 1
-            print("|".join(line))
+            print(" " + " | ".join(line))
             if i != field.get_rank():
                 print("---|---|---")
 
@@ -32,7 +32,14 @@ class View(object):
         try:
             raw_input("Press Enter")
         except NameError:
-            input("Press Enter")       
+            input("Press Enter")
+
+    def show_menu(self, player_num):
+        try:
+            name = raw_input("Enter a name of player " + player_num + "\n")
+        except NameError:
+            name = input("Enter a name of " + player_num + "\n")
+        return name
 
 
 if __name__ == "__main__":

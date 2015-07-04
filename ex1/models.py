@@ -3,7 +3,7 @@
 class Field(object):
     def __init__(self, rank=3):
         self.rank = rank
-        self.field = [["   ",] * rank for i in range(rank)]
+        self.field = [[" ",] * rank for i in range(rank)]
 
     def set_value(self, x, y, sym):
         self.field[x][y] = sym
@@ -13,9 +13,14 @@ class Field(object):
         
 
 class Player(object):
-    def __init__(self, name="Player", sign=" X "):
+    def __init__(self):
+        self.name = "PC"
+        self.sign = "X"
+    def set_name(self, name):
         self.name = name
+    def set_sign(self, sign):
         self.sign = sign
+        
 
 
 if __name__ == "__main__":

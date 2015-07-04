@@ -5,8 +5,8 @@ from controllers import Controller
 
 
 def main():
-    player1 = Player("Grisha", " X ")
-    player2 = Player("Misha", " O ")
+    player1 = Player()
+    player2 = Player()
     field = Field()
     view = View()
     cont = Controller(player1, player2, field, view)
