@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
+from overmind import AI
 
 
 class Controller(object):
@@ -8,14 +9,17 @@ class Controller(object):
         self.player2 = player2
         self.field = field
         self.view = view
+        self.first_round = True
 
     def players_init(self):
-        name = self.view.show_menu("1")
-        if name != "":
-            self.player1.set_name(name)
-        name = self.view.show_menu("2")
-        if name != "":
-            self.player2.set_name(name)
+        if self.first_round:
+            name = self.view.show_menu("Enter a name of player 1")
+            if name != "":
+                self.player1.set_name(name)
+            name = self.view.show_menu("Enter a name of player 2")
+            if name != "":
+                self.player2.set_name(name)
+            self.first_round = False
         
         player_one_turn = bool(random.randint(0, 1))
         if player_one_turn:
@@ -29,27 +33,34 @@ class Controller(object):
     def game_loop(self):
         player_one_turn = self.players_init()
         game_over = False
+        ai = AI()
+        moves_list = []
+        self.field.clear()
         while not game_over:
             self.view.clear_screen()
             self.view.draw(self.field)
             if player_one_turn:
-                str_values = self.view.input_values(self.player1)
+                if self.player1.name == "PC":
+                    str_values = ai.make_turn(moves_list, self.player1.sign, self.player2.sign)
+                else:
+                    str_values = self.view.input_values(self.player1)
                 sym = self.player1.sign
             else:
-                str_values = self.view.input_values(self.player2)
+                if self.player2.name == "PC":
+                    str_values = ai.make_turn(moves_list, self.player2.sign, self.player1.sign)
+                else:
+                    str_values = self.view.input_values(self.player2)
                 sym = self.player2.sign
             error = self.test_values(str_values)
             if error:
+                self.view.show_message(moves_list)
                 self.view.show_message(error)
                 continue
             a, b = str_values.split()
             a, b = int(a), int(b)
             self.field.set_value(a, b, sym)
-            if self.no_one_wins(self.field):
-                self.view.clear_screen()
-                self.view.draw(self.field)
-                self.view.show_message("Round draw")
-                break
+            moves_list.append(self.field.get_rank() * a + b)
+            
             if self.is_win():
                 self.view.clear_screen()
                 self.view.draw(self.field)
@@ -57,6 +68,11 @@ class Controller(object):
                     self.view.show_message(self.player1.name + " (" + self.player1.sign + ") wins")
                 else:
                     self.view.show_message(self.player2.name + " (" + self.player2.sign + ") wins")
+                break
+            if self.no_one_wins():
+                self.view.clear_screen()
+                self.view.draw(self.field)
+                self.view.show_message("Round draw")
                 break
             player_one_turn = not player_one_turn
 
@@ -71,7 +87,7 @@ class Controller(object):
         except ValueError:
             return "Only integer coordinates!"
         if not (0 <= a < self.field.get_rank() and 0 <= b < self.field.get_rank()):
-            return "Enter coords in range [0;{})".format(self.field.get_rank())
+            return str_values + "Enter coords in range [0;{})".format(self.field.get_rank())
         elif self.field.field[a][b] != " ":
             return "Coordinates are occupied!"
         else:
@@ -111,12 +127,18 @@ class Controller(object):
         else:
             return False
 
-    def no_one_wins(self, field):
-        for line in field.field:
+    def no_one_wins(self):
+        for line in self.field.field:
             for item in line:
                 if item == " ":
                     return False
         return True
+        
+    def play_again(self):
+        if self.view.show_menu("Play again? (y/n)") == "y":
+            return True
+        else:
+            return False            
 
 
 if __name__ == "__main__":

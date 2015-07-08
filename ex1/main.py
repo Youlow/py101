@@ -10,7 +10,10 @@ def main():
     field = Field()
     view = View()
     cont = Controller(player1, player2, field, view)
-    cont.game_loop()
+    play_again = True
+    while play_again:
+        cont.game_loop()
+        play_again = cont.play_again()
 
 
 if __name__ == "__main__":

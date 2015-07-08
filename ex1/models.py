@@ -11,6 +11,9 @@ class Field(object):
     def get_rank(self):
         return self.rank
         
+    def clear(self):
+        self.field = [[" ",] * self.rank for i in range(self.rank)]
+        
 
 class Player(object):
     def __init__(self):

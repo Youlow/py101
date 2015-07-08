@@ -34,12 +34,12 @@ class View(object):
         except NameError:
             input("Press Enter")
 
-    def show_menu(self, player_num):
+    def show_menu(self, input_data):
         try:
-            name = raw_input("Enter a name of player " + player_num + "\n")
+            data = raw_input(input_data + "\n")
         except NameError:
-            name = input("Enter a name of " + player_num + "\n")
-        return name
+            data = input(input_data + "\n")
+        return data
 
 
 if __name__ == "__main__":

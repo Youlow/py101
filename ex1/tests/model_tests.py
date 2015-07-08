@@ -10,15 +10,33 @@ class ModelTests(TestCase):
         assert field_3x3.get_rank() is 3
         assert len(field_3x3.field) == 3
         assert len(field_3x3.field[0]) == 3
+        for line in field_3x3.field:
+            for item in line:
+                assert item == " "
 
-    #     add your model tests
+    def field_set_value_test(self):
+        field_5x5 = Field(rank=5)
+        field_5x5.set_value(2, 3, "O")
+        i = 0
+        for line in field_5x5.field:
+            for item in line:
+                if item != " ":
+                    i += 1
+
+        assert field_5x5.field[2][3] == "O"
+        assert i == 1
+            
 
     def player_test(self):
-        player = Player(name='Tom', sign=['x', 'y', 'z'])
+        player = Player()
 
-        assert player.name == 'Tom'
+        assert player.name == 'PC'
+        assert player.sign == 'X' or player.sign == 'O'
 
-        # This assert will fail! You should repair model to pass this test
-        assert player.sign == ' X ' or player.sign == ' 0 '
+    def player_set_name_sign_test(self):
+        player = Player()
+        player.set_name('Robert')
+        player.set_sign('O')
 
-    #     add your model tests
+        assert player.name == 'Robert'
+        assert player.sign == 'O'
