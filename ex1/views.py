@@ -9,7 +9,7 @@ class View(object):
 
     def input_values(self, player):
         try:
-            return raw_input(player.name + "'s (" + player.sign + ") turn\n")
+            return raw_input(player.name + "'s (" + str(player.sign) + ") turn\n")
         except NameError:
             return input(player.name + "'s turn\n")
 
